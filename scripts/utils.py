@@ -40,7 +40,7 @@ def add_strike_dip(tri_features):
     for feat in tri_features:
         coords = feat['geometry']['coordinates'][0]
     
-        coo = [[co[0], co[1], -co[2]] for co in coords[:-1]]
+        coo = [[co[0], co[1], co[2]] for co in coords[:-1]]
     
         s, d = hsp.strike_dip_from_3_xyz(coo[0], coo[1], coo[2])
     
@@ -50,9 +50,9 @@ def add_strike_dip(tri_features):
 def add_rake_from_trend(tri_features, trend, rake_err):
     for feat in tri_features:
         prop = feat['properties']
-        prop['rake'] = hsp.rake_from_sd_trend(prop['strike'], prop['dip'], 277,
-                                              aki_richards=True)
-        prop['rake_err'] = 10
+        prop['rake'] = hsp.rake_from_sd_trend(prop['strike'], prop['dip'],
+                                              trend, aki_richards=True)
+        prop['rake_err'] = rake_err
 
 
 def feature_to_df(feature, tri_num=0):
