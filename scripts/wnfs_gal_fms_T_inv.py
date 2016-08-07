@@ -2,6 +2,7 @@ import numpy as np
 import pandas as pd
 import time
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import colors
 import seaborn as sns
 from scipy.stats import gaussian_kde
@@ -14,7 +15,7 @@ from tect_stress_functions import *
 from stress_plots import rose, scatter_w_marginals
 import colormaps as cmaps
 
-plt.register_cmap(name='viridis', cmap=cmaps.viridis)
+#plt.register_cmap(name='viridis', cmap=cmaps.viridis)
 #plt.set_cmap(cmaps.viridis)
 
 wnfs = pd.read_csv('../data/fault_data/wnfs_tris.csv')
@@ -52,7 +53,7 @@ fault_df_inspect = pd.concat((wnfs,
 wnfs_shallow = (wnfs.depth < -1500)
 #wnfs.loc[(wnfs.depth > -1500), 'slip_m'] = 0.01
 
-rup['slip_m'] *= 0.01
+rup['slip_m'] *= 0.01 #scale to cm
 
 fault_df = pd.concat((wnfs, 
                       #eqs, 
@@ -70,7 +71,7 @@ t_start = time.time()
 
 np.random.seed(69)
 
-n_mcs = 50000
+n_mcs = int(5e5)
 
 trials_per_loop = 1000
 
@@ -84,8 +85,9 @@ for i in range(n_loops):
     first_iter = i * trials_per_loop
     
     T_likes[i] = do_stress_calcs(fault_df, n_trials=trials_per_loop, 
-                                s1_range=(0., 0.75), s3_range=(-0.75,0.75),
-                                first_iter=first_iter, l_norm=1)
+                                 s1_range=(0., 1.), s3_range=(-2.,0.),
+                                 theta_range=(-np.pi/2, np.pi/2),
+                                 first_iter=first_iter, l_norm=1)
     try:
         if i % (n_loops // 10) == 0:
             print(i * trials_per_loop)
@@ -111,12 +113,13 @@ T_keeps = T_like_df[T_like_df.rel_likelihood > rand_filter]
 T_keep_eigs = T_keeps.apply(pandas_car_to_eigs, axis=1)
 T_keeps['s1'] = T_keep_eigs.s1.values
 T_keeps['s3'] = T_keep_eigs.s3.values
-T_keeps['theta'] = T_keep_eigs.theta.values
+T_keeps['theta'] = T_keep_eigs.theta.values + 180
+T_keeps['theta'][T_keeps['theta'] > 360] -= 360
 
 print('done in {0:.1f} m'.format((t_end - t_start)/60))
 del T_likes
 
-#T_keeps.to_csv('../results/T_keeps.csv')
+T_keeps.to_csv('../results/temp/T_keeps.csv')
 
 ### 
 '''
@@ -126,36 +129,38 @@ sampling strategy (i.e. T1 uniform, T3 = uniform fraction of T1), the density
 is calculated, and then re-transformed to find the MLE absolute values.
 '''
 
-#dens_data = T_keeps[['s1', 's3', 'theta']].values.T
-#dens_data_s1_s3_ratio = dens_data.copy()
-#dens_data_s1_s3_ratio[1,:] /= dens_data[0,:]
-#
-#kde = gaussian_kde(dens_data_s1_s3_ratio)
-#density = kde(dens_data_s1_s3_ratio)
-#
+dens_data = T_keeps[['s1', 's3', 'theta']].values.T
+dens_data_s1_s3_ratio = dens_data.copy()
+dens_data_s1_s3_ratio[1,:] /= 2.
+dens_data_s1_s3_ratio[2,:] /= 180.
+
+kde = gaussian_kde(dens_data_s1_s3_ratio, bw_method=0.1)
+density = kde(dens_data_s1_s3_ratio)
+
 #s1_max, s3_max, theta_max = dens_data[:,np.argmax(density)]
-#
-#txx_max = scv.xx_stress_from_s1_s3_theta(s1_max, s3_max, theta_max)
-#tyy_max = scv.yy_stress_from_s1_s3_theta(s1_max, s3_max, theta_max)
-#txy_max = scv.xy_stress_from_s1_s3_theta(s1_max, s3_max, theta_max)
+T_mle = T_keeps.iloc[np.argmax(density)]
+
+txx_max = T_mle.txx
+tyy_max = T_mle.tyy
+txy_max = T_mle.txy
+theta_max = T_mle.theta
+s1_max = T_mle.s1
+s3_max = T_mle.s3
 
 
-txx_max = T_most_like['txx'].values[0]
-txy_max = T_most_like['txy'].values[0]
-tyy_max = T_most_like['tyy'].values[0]
+#tyy_max = T_most_like['tyy'].values[0]
 
 print('xx max =', txx_max)
 print('yy max =', tyy_max)
 print('xy max =', txy_max)
 
-s1_max, s3_max, theta_max = cart_stresses_to_eigs(txx_max, tyy_max, txy_max)
+#s1_max, s3_max, theta_max = cart_stresses_to_eigs(txx_max, tyy_max, txy_max)
 
 print('t1' , s1_max)
 print('t3' , s3_max)
 print('theta' , theta_max)
 
-T_max_series = pd.Series({'txx':txx_max, 'tyy':tyy_max, 'txy':txy_max})
-#T_max_series.to_csv('../results/temp/T_best.csv')
+T_mle.to_csv('../results/temp/T_best.csv')
 
 
 fdf = fault_df_inspect.copy(deep=True)
@@ -170,7 +175,6 @@ fdf['xy_stress'] += fdf.txy
 
 fdf = hss.resolve_stresses(fdf)
 fdf['tau_rake'] = hsp.get_rake_from_shear_components(fdf.tau_ss, fdf.tau_dd)
-#fdf.to_csv('../data/fault_data/fault_df_inv.csv', index=False)
 
 fdf['tau_rake_misfit'] = hsp.angle_difference(fdf.rake, fdf.tau_rake,
                                               return_abs=False)
@@ -186,7 +190,9 @@ xx_o, yy_o = trend_to_cart(fdf.obs_trend)
 
 xx_t, yy_t = trend_to_cart(fdf.tau_trend)
 
+fdf['tau_rake_misfit_abs'] = np.abs(fdf['tau_rake_misfit'])
 
+fdf.to_csv('../data/fault_data/fault_df_inv.csv', index=False)
 
 #### plotting
 
@@ -314,6 +320,33 @@ plt.title('T_min/ T_max posterior PDF')#, fontsize=24)
 plt.xlabel('T_min / T_max')#, fontsize=18)
 #plt.gca().tick_params(labelsize=18)
 
+
+
+#plt.figure()
+scatter_w_marginals(T_keeps.s1, T_keeps.s3, #c=T_keeps.theta,
+                    bins=20, xlabel='s1', ylabel='s3', alpha=0.1, lw=0,
+                    #cmap='viridis', 
+                    plot_max=True)
+
+
+scatter_w_marginals(T_keeps.s1, T_keeps.theta, #c=T_keeps.s3,
+                    bins=20, xlabel='s1', ylabel='theta', alpha=0.1, lw=0,
+                    #cmap='viridis', 
+                    plot_max=True)
+
+scatter_w_marginals(T_keeps.s3, T_keeps.theta, #c=T_keeps.s3,
+                    bins=20, xlabel='s3', ylabel='theta', alpha=0.1, lw=0,
+                    #cmap='viridis', 
+                    plot_max=True)
+
+
+
+#fig3d = plt.figure()
+#ax3 = fig3d.add_subplot(111, projection='3d')
+#ax3.scatter(T_keeps.s1, T_keeps.s3/T_keeps.s1, T_keeps.theta)
+#ax3.set_xlabel('s1')
+#ax3.set_ylabel('s3/s1')
+#ax3.set_zlabel('theta')
 
 #plt.show(block=False)
 
