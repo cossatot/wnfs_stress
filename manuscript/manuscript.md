@@ -32,7 +32,7 @@ influence the location of subsequent faults and stepovers."
 
 # Introduction
 
-In the Himalaya and Tibet, it has been observed for decades that thrust
+In the Himalaya and Tibet, it has long been observed that thrust
 earthquakes take place at the low-elevation rangefronts surrounding the
 plateau, while normal and strike-slip earthquakes occur in the elevated
 interior (e.g., *Molnar and Tapponnier, 1978; Elliott et al., 2010*) (Figure
@@ -46,7 +46,7 @@ higher elevations, $\sigma_V > \sigma_H$, causing crustal extension.
 
 \begin{figure*}[bt] 
 \centering
-\includegraphics{./figures/wnfs_tib_map_.pdf}
+\includegraphics{./figures/wnfs_tib_maps.pdf}
 \label{fig_tib_map}
 \caption{Active faulting of the Tibetan plateau. \textbf{1a}: View of the
          orogen. \textbf{1b}: Map of the southeastern KF and WNFS. \textbf{1c}:
@@ -58,29 +58,29 @@ higher elevations, $\sigma_V > \sigma_H$, causing crustal extension.
          (\emph{Styron et al., 2010})}
 \end{figure*}
 
-These observations and hypotheses are focused on orogens in scope and scale. 
-The lower limit to which they are applicable is a natural question, but not one 
-that has received much attention. The physical model of *Molnar and Lyon-Caen 
-(1988)* rests on the assumption of isostatically-supported topography, which 
-is valid over $10^2$–$10^3$ km scales (i.e., orogens), but may not be over 1-10
+These observations and hypotheses are focused on orogens. The lower spatial 
+limit to which they are applicable is a natural question, but not one that has 
+received much attention. The analytical model by *Molnar and Lyon-Caen (1988)* 
+rests on the assumption of isostatically-supported topography, which is valid 
+over $10^2$–$10^3$ km scales (i.e., orogens), but may not be over 1-10
 km (mountain to mountain range) scales, where topography is mostly supported
 elastically (e.g., *Bollinger et al. 2004*). Additionally, topographic slopes at
 these scales may impart locally substantial stresses in the upper crust, which
-may not be a factor at larger scales. The motivating observations are typically
+may be smoothed out at larger scales. The motivating observations are typically
 earthquake focal mechanisms, which are too sparse spatially and too narrow
 temporally to describe deformation at 1-10 km resolution.
 
-However, neotectonic mapping provides an alternate description of the 
+However, neotectonic mapping provides a more complete description of the 
 deformation field averaged over longer timescales ($10^3$-$10^5$ years) and 
 offers better spatial coverage and resolution as well. Recent neotectonic maps 
 of the Himalaya and Tibet reveal a rich interaction between fault type and
-elevation over 1-100 km scales. These observations document changes in the
-kinematics of large fault systems where the faults cross relatively smaller
-topographic features (ridges to mountain ranges) (Figure 1); as the topographic
-relief is often known to be older than the active faults, it is likely that
+elevation over 1-100 km scales (Figure 1). These observations document changes 
+in the kinematics of large fault systems where the faults cross smaller
+topographic features (ridges to mountain ranges); as the topography
+is often known to be older than the active faults, it is likely that
 topography modifies fault kinematics at these scales as well, though the
-mechanisms may be different. Documenting this phenomenon at is the first
-objective of this research.
+mechanisms may be different than in the large-scale, isostatic case. 
+Documenting this phenomenon is the first objective of this research.
 
 If topography is capable of modifying fault kinematics, then the total
 (tectonic plus topographic) stress field must resolve on the faults with shear
@@ -98,19 +98,19 @@ the second objective of this research.
 # Fault kinematic transitions and topography in Tibet and the Himalaya
 
 Many fault zones within the Tibetan plateau and vicinity show transitions in
-fault kinematics with changes in topography (Figure 1, S1–S4). These are best
+fault kinematics with changes in topography (Figure 1). These are best
 displayed in transtensional fault zones in the elevated interior of the
 plateau, consistent with the hypothesis that Tibet is essentially at the
 maximum elevation that can be sustained by horizontal tectonic compression
 (e.g., *Molnar and Lyon-Caen, 1988*). For example, the sinistral Longmu
 Co–Gozha Co fault system has a major extensional stepover where the fault
-crosses the Kunlun Shan (Figure S1), where the 2008 $M_w$ 7.1 Yutian earthquake
-(*Xu et al., 2013*) occurred. Left-lateral faulting continues to the northeast
+crosses the western Kunlun Shan, where the 2008 $M_w$ 7.1 Yutian earthquake 
+occurred (*Xu et al., 2013*). Left-lateral faulting continues to the northeast
 of the high mountains as the faults merge with the Altyn Tagh Fault. Similarly,
-the transtensional Yibug Caka and Mugu Purou rifts in central Tibet (Figure S2)
+the transtensional Yibug Caka and Mugu Purou rifts in central Tibet
 show local extensional stepovers where topography is elevated (*Taylor et al.,
 2003*; *Ratschbacher et al., 2011*), and the conjugate strike-slip systems to
-their south link to rifts where regional elevation steps higher (Figure S3).
+their south link to rifts where regional elevation steps higher.
 
 Additionally, most isolated topographic highs on the plateau outside of
 transtensional zones are cut by active normal faults that do not extend far
@@ -138,7 +138,7 @@ dextral slip continues through the Himalayan wedge along the Western Nepal
 Fault System (WNFS). Dextral and normal slip has been observed on the Tibrikot 
 and Dogari segments of the WNFS (*Murphy et al., 2014; Silver et al., 2015*).
 Additional right-lateral offsets and fault traces have been observed through
-reconnaisance mapping of the Talphi and Bari Gad Faults to the northwest and
+reconnaissance mapping of the Talphi and Bari Gad Faults to the northwest and
 southeast of the Tibrikot fault (*Nakata, 1989*).
 
 A striking feature of the overall geometry of the KF-GMD-WNFS faults is that
@@ -327,10 +327,20 @@ vertical compression underneath topography. Though the misfit is acceptable, it
 is unclear how orogen-parallel tension greater than $\rho g z$ could be
 generated in the Himalaya; block divergence due to variably-oblique convergence
 along the curved Himalayan front should induce some tension (*McCaffrey and
-Nábělek, 1998*), although $\rho g z$ is quite high. Additionally, unlike
+Náb\v{e}lek, 1998*), although $\rho g z$ is quite high. Additionally, unlike
 topographic stress, tectonic stress does not predict the location of
 extensional stepovers, it simply is able to match the slip rake on the existing
 stepovers to some degree.
+
+### Gorkha
+
+These stresses are consistent with Himalayan thrusting: $T_{\max} = 0.1 * \rho 
+g z$ ~7 MPa on a 10° dipping plane at 15 km, which is approximately equal to 
+the location and magnitude of the maximum stress drop (~8 MPa) of the Gorkha 
+earthquake (*Galetzka et al., 2015*), suggesting that tectonic stress drop may 
+have been locally complete during this earthquake. However, shear stresses from 
+topography on the Gorkha fault plane are >20 MPa here, so total shear stress 
+drop was not complete.
 
 # Discussion
 
@@ -360,26 +370,15 @@ current highest mountain range. They are significantly lower than those
 estimated at $T_{\max} = 0.5 - 1 \, \rho g z$ in eastern Tibet with the same
 methods  (*Styron and Hetland, 2015*), or $T_{\max}= 1.0 \, \rho g z$ measured
 from the upper 2.5 km of the SAFOD pilot hole on the San Andreas (*Hickman and
-Zoback, 1994*). However, they are more in line with other estimates from
-orogens those undergoing active thrusting at their base and normal
-faulting at elevation: *Bollinger et al.* (*2004*) estimate maximum deviatoric
-stress to be 35 MPa at ~10 km depth (~0.13 $\rho g z$) in the Himalaya, based
-on similar observations to those presented here; *Richardson and Coblentz*
-(*1994*) found $T_{\max}= ~0.1-0.2 \, \rho g z$ to be plausible in the upper
-crust of the Andes based on finite element modeling; and *Copley et al.*
-(*2009*) found an average $T_{\max}$ of 20 MPa in the upper 15 km of Albania,
-resulting in a gradient of 0.1 $\rho g z$ if $T_{\max}$ increases linearly with
-depth.
+Zoback, 1994*).
+
 
 # References
 Bollinger, L., Avouac, J. P., Cattin, R., & Pandey, M. R. (2004). Stress
 buildup in the Himalaya. Journal of Geophysical Research: Solid Earth,
 109(B11).
 
-Copley, A., Boait, F., Hollingsworth, J., Jackson, J., & McKenzie, D. (2009).
-Subparallel thrust and normal faulting in Albania and the roles of
-gravitational potential energy and rheology contrasts in mountain belts.
-Journal of Geophysical Research: Solid Earth, 114(B5).
+
 
 Elliott, J. R., Walters, R. J., England, P. C., Jackson, J. A., Li, Z., &
 Parsons, B. (2010). Extension on the Tibetan plateau: recent normal faulting
